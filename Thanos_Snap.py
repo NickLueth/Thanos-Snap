@@ -1,6 +1,7 @@
 #!/bin/python3
 # Thanos snapping script
 # Created by Nick Lueth
+# Last edited: 1/30/2020
 
 import random
 
@@ -23,9 +24,10 @@ def load_names():
 def get_new():
 	# Get's a list of new names by the user
 	print("SEPARATE NAMES BY COMMAS!")
-	names = input("Enter the name(s): ").split(",")
+	names = input("Enter the name(s): ").lower().split(",")
 	for i in range(len(names)):
 		names[i] = names[i].strip()
+	names = list(dict.fromkeys(names))
 	return names
 
 def finalize_list(dead, alive, names):
