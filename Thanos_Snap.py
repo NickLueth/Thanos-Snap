@@ -32,37 +32,51 @@ def get_new():
 
 def finalize_list(dead, alive, names):
 	new_names = []
+	old_dead = []
+	old_alive = []
 	for name in names:
 		if name not in alive and name not in dead:
 			new_names.append(name)
 		elif name in alive:
-			print(name, "survived the snap!")
+			old_alive.append(name)
 		else:
-			print(name, "died after the snap!")
-	return new_names
+			old_dead.append(name)
+	return new_names, old_alive, old_dead
 
 
-def thanos_snap(new_names):
+def thanos_snap(new_names, old_alive, old_dead):
 	# Coin flip whether someone dies from the snap or lives
+	we_lived = old_alive
+	we_died = old_dead
 	for name in new_names:
 		coin = random.randint(0, 1)
 		if name == "":
 			continue
 		elif coin == 0:
 			dead_file = open("dead.txt", "a+")
-			print(name, "died after the snap!")
+			we_died.append(name)
 			dead_file.write(name + "\n")
 			dead_file.close()
 		elif coin == 1:
 			alive_file = open("alive.txt", "a+")
-			print(name, "survived the snap!")
+			we_lived.append(name)
 			alive_file.write(name + "\n")
 			alive_file.close()
+	return we_lived, we_died
 
-def results():
+def print_results(alive, dead):
 	# Make to print the results in a appealing way
-	pass
+    	print("Alive:")
+    	for name in alive:
+        	print("{{*}} {name}".format(name=name))
+    	print("\nDead:")
+    	for name in dead:
+        	print("{{*}} {name}".format(name=name))
 
 dead, alive = load_names()
 names = get_new()
-thanos_snap(finalize_list(dead, alive, names))
+nn, oa, od = finalize_list(dead, alive, names)
+new_alive, new_dead = thanos_snap(nn, oa, od)
+print_results(new_alive, new_dead)
+
+
