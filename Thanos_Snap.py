@@ -40,13 +40,15 @@ def finalize_list(dead, alive, names):
 		else:
 			print(name, "died after the snap!")
 	return new_names
-	
+
 
 def thanos_snap(new_names):
 	# Coin flip whether someone dies from the snap or lives
 	for name in new_names:
 		coin = random.randint(0, 1)
-		if coin == 0:
+		if name == "":
+			continue
+		elif coin == 0:
 			dead_file = open("dead.txt", "a+")
 			print(name, "died after the snap!")
 			dead_file.write(name + "\n")
@@ -59,8 +61,8 @@ def thanos_snap(new_names):
 
 def results():
 	# Make to print the results in a appealing way
-	pass 
-			
+	pass
+
 dead, alive = load_names()
 names = get_new()
 thanos_snap(finalize_list(dead, alive, names))
