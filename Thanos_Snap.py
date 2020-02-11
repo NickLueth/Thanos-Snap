@@ -1,7 +1,7 @@
 #!/bin/python3
 # Thanos snapping script
 # Created by Nick Lueth
-# Last edited: 1/30/2020
+# Last edited: 2/11/2020
 
 import random
 
